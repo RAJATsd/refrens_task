@@ -23,7 +23,7 @@ app.use("/suggestions/:searchText", (req, res) => {
     );
 
     return res
-      .status(400)
+      .status(200)
       .json({ message: "RESULT FOUND", data: searchedResults });
   } catch (error) {
       res.status(500).json({message:"INTERNAL SERVER ERROR"});
