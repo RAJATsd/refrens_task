@@ -15,24 +15,28 @@ const InputContainer = () => {
 
   const handleInputChange = (event) => {
     setSearchInput(event.target.value);
-    fetchSearchedInput(event.target.value);
+    const trimmedInputValue = event.target.value
+      .replace(/[^1-9a-zA-Z ]/g, " ")
+      .trim();
+    if (trimmedInputValue === "" || trimmedInputValue.length < 3) {
+      if (searchResults.length > 0) {
+        setSearchResults([]);
+      }
+      return;
+    }
+    fetchSearchedInput(trimmedInputValue);
   };
 
   const fetchFunction = async (inputValue) => {
     try {
-      console.log("here for test");
-      const trimmedInputValue = inputValue.trim();
-      if (trimmedInputValue === "") {
-        if (searchResults.length > 0) {
-          setSearchResults([]);
-        }
-        return;
-      }
       const fetchSuggestions = await fetch(
-        getSuggestionsURL(trimmedInputValue)
+        getSuggestionsURL(inputValue)
       );
       const fetchedResults = await fetchSuggestions.json();
-      setSearchResults(fetchedResults.data);
+
+      if (fetchedResults.data) {
+        setSearchResults(fetchedResults.data);
+      }
     } catch (e) {
       console.log("something right did not heppen");
     }
@@ -48,7 +52,7 @@ const InputContainer = () => {
         value={searchInput}
       />
       {searchInput.trim() !== "" && (
-        <Suggestions searchResults={searchResults} />
+        <Suggestions searchResults={searchResults} searchInput={searchInput} />
       )}
     </div>
   );

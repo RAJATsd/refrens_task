@@ -2,3 +2,11 @@
     max-height: 50vh;
     overflow-y: auto;
 }
+
+.no-user-message {
+    padding: 2rem;
+    width: fit-content;
+    margin: auto;
+    font-weight: bold;
+    color: rgb(167, 167, 167);
+}
