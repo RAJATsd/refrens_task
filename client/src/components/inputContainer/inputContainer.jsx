@@ -1,16 +1,33 @@
 import "./inputContainer.css";
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import Suggestions from "../suggestions/suggestions";
 import { debounce } from "lodash";
 import { getSuggestionsURL } from "../../constants/apiConstants";
 
 const InputContainer = () => {
-  //   const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const fetchSearchedInput = debounce(async (inputValue) => {
+
+  const fetchSearchedInput = useCallback(
+    debounce((inputValue) => fetchFunction(inputValue), 300),
+    []
+  );
+
+  const handleInputChange = (event) => {
+    setSearchInput(event.target.value);
+    fetchSearchedInput(event.target.value);
+  };
+
+  const fetchFunction = async (inputValue) => {
     try {
+      console.log("here for test");
       const trimmedInputValue = inputValue.trim();
-      if (trimmedInputValue === "") return;
+      if (trimmedInputValue === "") {
+        if (searchResults.length > 0) {
+          setSearchResults([]);
+        }
+        return;
+      }
       const fetchSuggestions = await fetch(
         getSuggestionsURL(trimmedInputValue)
       );
@@ -19,7 +36,7 @@ const InputContainer = () => {
     } catch (e) {
       console.log("something right did not heppen");
     }
-  }, 300);
+  };
 
   return (
     <div className="input-container">
@@ -27,9 +44,10 @@ const InputContainer = () => {
         type="text"
         className="search-input"
         placeholder="search user by ID,address,name,items or pincode"
-        onChange={(evt) => fetchSearchedInput(evt.target.value)}
+        onChange={handleInputChange}
+        value={searchInput}
       />
-      {searchResults.length > 0 && (
+      {searchInput.trim() !== "" && (
         <Suggestions searchResults={searchResults} />
       )}
     </div>

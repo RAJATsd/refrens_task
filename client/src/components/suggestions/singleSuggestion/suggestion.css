@@ -1,0 +1,28 @@
+.suggestion {
+  padding: 1rem;
+  cursor: pointer;
+}
+
+.suggestion:hover {
+    background: rgb(255, 241, 216);
+}
+
+.suggestion .id-and-name {
+  margin-bottom: 0.75rem;
+}
+
+.suggestion .id-and-name .user-id {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 0.1rem;
+}
+
+.suggestion .id-and-name .user-name {
+  font-size: 0.9rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.suggestion .address-items-container .user-address {
+    font-size: 0.88rem;
+    font-family:fantasy;
+}
