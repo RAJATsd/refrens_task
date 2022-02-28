@@ -1,0 +1,13 @@
+.user-details-container {
+    width: 50%;
+    margin: auto;
+    min-width: 300px;
+    padding: 2rem;
+    border: 1px solid #000000;
+    border-radius: 1rem;
+    margin-top: 3rem;
+}
+
+.user-details-container>div {
+    margin: 0.5rem 0;
+}

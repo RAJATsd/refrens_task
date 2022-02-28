@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
 
+/**
+ * 
+ * @param {string} keyHitToBeChecked  
+ * @returns (true/false) - if the intended key is pressed or not
+ */
 const useKeyPress = (keyHitToBeChecked) => {
   const [pressedKey, setPressedKey] = useState(false);
   useEffect(() => {

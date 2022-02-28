@@ -32,6 +32,28 @@ app.use("/suggestions/:searchText", (req, res) => {
   }
 });
 
+app.use("/user/:userId", (req, res) => {
+  try {
+    const { userId } = req.params;
+    if (!userId || userId === "") {
+      return res.status(404).json({ message: "EMPTY User Id" });
+    }
+
+    const searchedUser = dummyData.find(
+      (singleItem) => singleItem.id === userId
+    );
+
+    return res
+      .status(200)
+      .json({
+        message: "RESULT FOUND",
+        data: searchedUser
+      });
+  } catch (error) {
+    res.status(500).json({ message: "INTERNAL SERVER ERROR" });
+  }
+});
+
 app.use("/", (req, res) => res.status(404));
 
 app.listen(API_PORT, () => console.log("Connected to 3001"));

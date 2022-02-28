@@ -1,6 +1,13 @@
 import "./suggestion.css";
 import React, { useRef, useEffect } from "react";
 
+/**
+ * 
+ * @param {object} suggestionInfo - contains the details of user
+ * @param {boolean} isSuggestionSelected
+ * @param {string} searchInput - value of input in search
+ * @returns 
+ */
 const Suggestion = ({
   suggestionInfo: { id, name, items, address },
   isSuggestionSelected,
@@ -8,6 +15,9 @@ const Suggestion = ({
 }) => {
   const elementReference = useRef();
 
+  /**
+   * side effect to scroll into view the selected suggestion
+   */
   useEffect(() => {
     if (isSuggestionSelected) {
       elementReference.current.scrollIntoView({ block: "nearest" });

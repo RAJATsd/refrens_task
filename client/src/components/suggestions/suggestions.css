@@ -1,6 +1,17 @@
 .suggestions-container {
     max-height: 50vh;
     overflow-y: auto;
+    position: absolute;
+    background: white;
+    width: 100%;
+    box-shadow: 2px 4px 8px 0px rgba(0,0,0,0.73);
+    -webkit-box-shadow: 2px 4px 8px 0px rgba(0,0,0,0.73);
+    -moz-box-shadow: 2px 4px 8px 0px rgba(0,0,0,0.73);
+}
+
+.suggestions-container .user-redirecting-link {
+    text-decoration: none;
+    color: unset;
 }
 
 .no-user-message {
@@ -9,4 +20,5 @@
     margin: auto;
     font-weight: bold;
     color: rgb(167, 167, 167);
+    text-align: center;
 }

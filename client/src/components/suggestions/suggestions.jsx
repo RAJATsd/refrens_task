@@ -1,27 +1,47 @@
 import "./suggestions.css";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import Suggestion from "./singleSuggestion/suggestion";
 import useKeyPress from "../../hooks/useKeyPress";
+import { Link } from "react-router-dom";
 
-const Suggestions = ({ searchResults, searchInput }) => {
+/**
+ * @param {array} searchResults - the users fetched on a specific input
+ * @param {string} searchInput - the Input value on typing 
+ * @param {number} selectedListOptionIndex 
+ * @param {function} setSelectedListOptionIndex
+ * @param {function} setSearchInput 
+ * @returns 
+ */
+const Suggestions = ({
+  searchResults,
+  searchInput,
+  selectedListOptionIndex,
+  setSelectedListOptionIndex,
+  setSearchInput,
+}) => {
   const ifArrowUpPressed = useKeyPress("ArrowUp");
   const ifArrowDownPressed = useKeyPress("ArrowDown");
-  const [selectedListOptionIndex, setSelectedListOptionIndex] = useState(0);
 
+  /**
+   * checking if the up arrow is pressed to change selectedListOptionIndex
+   */
   useEffect(() => {
     if (ifArrowUpPressed) {
-      const newSelectedIndex =
-        selectedListOptionIndex !== 0
-          ? selectedListOptionIndex - 1
-          : searchResults.length - 1;
+      const newSelectedIndex = !selectedListOptionIndex
+        ? searchResults.length - 1
+        : selectedListOptionIndex - 1;
       setSelectedListOptionIndex(newSelectedIndex);
     }
   }, [ifArrowUpPressed]);
 
+  /**
+   * checking if the down arrow is pressed to change selectedListOptionIndex
+   */
   useEffect(() => {
     if (ifArrowDownPressed) {
       const newSelectedIndex =
-        selectedListOptionIndex !== searchResults.length - 1
+        selectedListOptionIndex !== searchResults.length - 1 &&
+        selectedListOptionIndex !== null
           ? selectedListOptionIndex + 1
           : 0;
       setSelectedListOptionIndex(newSelectedIndex);
@@ -30,16 +50,30 @@ const Suggestions = ({ searchResults, searchInput }) => {
 
   return (
     <div className="suggestions-container">
-      {searchResults.length > 0
-        ? searchResults.map((suggestionInfo, index) => (
+      {searchResults.length > 0 ? (
+        searchResults.map((suggestionInfo, index) => (
+          <Link
+            key={suggestionInfo.id}
+            onClick={() => setSearchInput("")}
+            to={`/user/${suggestionInfo.id}`}
+            className="user-redirecting-link"
+          >
             <Suggestion
-              key={suggestionInfo.id}
               suggestionInfo={suggestionInfo}
               isSuggestionSelected={selectedListOptionIndex === index}
               searchInput={searchInput}
             />
-          ))
-        : <div className="no-user-message">No User Found</div>} 
+          </Link>
+        ))
+      ) : (
+        <div className="no-user-message">
+          {searchInput.length < 3 ? (
+            <h4>Word should be at least 3 characters</h4>
+          ) : (
+            <h3>No User Found</h3>
+          )}
+        </div>
+      )}
     </div>
   );
 };
