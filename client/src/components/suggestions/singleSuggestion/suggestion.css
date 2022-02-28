@@ -1,6 +1,7 @@
 .suggestion {
   padding: 1rem;
   cursor: pointer;
+  border-bottom: 1px solid rgb(202, 202, 202);
 }
 
 .suggestion:hover {
