@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 import { searchUserByUserId } from "../../apis/users";
 import { useParams } from "react-router-dom";
 
+/**
+ * fetches the details of the user from userId which is assessed by the URL
+ * @returns detail of the user with all the information
+ */
 const UserDetails = () => {
   const { userId } = useParams();
   const [userDetails, setUserDetails] = useState(null);
